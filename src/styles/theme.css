@@ -1,0 +1,87 @@
+/* ==========================================================================
+   THE PODI FACTORY - CENTRALIZED THEME CSS VARIABLES
+   Modify the CSS variables below to update or change the entire website theme.
+   All typography, color palettes, button shapes, and container radiuses
+   throughout the platform are bound directly to these variables.
+   ========================================================================== */
+
+:root {
+  /* Brand Primary Colors */
+  --color-primary: #6a0e00;
+  --color-primary-hover: #500b00;
+  --color-primary-container: #8b2612;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #ffa38f;
+  --color-primary-fixed: #ffdad3;
+
+  /* Secondary / Accent (Turmeric & Ochre) */
+  --color-secondary: #7c5800;
+  --color-secondary-hover: #634600;
+  --color-secondary-container: #ffc247;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #715000;
+
+  /* Earth / Wood / Spices */
+  --color-tertiary: #423021;
+  --color-tertiary-container: #5b4636;
+  --color-on-tertiary: #ffffff;
+
+  /* Surfaces & Backgrounds */
+  --color-surface: #fbf9f5;
+  --color-surface-dim: #dbdad6;
+  --color-surface-bright: #ffffff;
+  --color-surface-container-low: #f5f3ef;
+  --color-surface-container: #efeeea;
+  --color-surface-container-high: #eae8e4;
+  --color-surface-card: #ffffff;
+
+  /* Text & Content */
+  --color-on-surface: #1b1c1a;
+  --color-on-surface-variant: #57423d;
+  --color-on-surface-muted: #786b66;
+
+  /* Outlines & Borders */
+  --color-outline: #8b716c;
+  --color-outline-variant: #dfc0b9;
+  --color-border-subtle: #e5dfd8;
+
+  /* Typography Stack */
+  --font-serif: 'Libre Caslon Text', 'Playfair Display', Georgia, serif;
+  --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-label: 'Work Sans', 'Manrope', sans-serif;
+
+  /* Shape & Radii */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-btn: 4px;
+  --radius-card: 10px;
+
+  /* Spacing Scale */
+  --spacing-container: 1280px;
+}
+
+/* Base resets bound to theme variables */
+body {
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  font-family: var(--font-sans);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, .font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-label {
+  font-family: var(--font-label);
+}
+
+/* Custom smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}

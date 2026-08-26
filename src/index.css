@@ -1,0 +1,111 @@
+@import "tailwindcss";
+@import "./styles/theme.css";
+
+/* Utility classes bound directly to centralized CSS variables */
+.bg-brand-surface {
+  background-color: var(--color-surface);
+}
+
+.bg-brand-surface-card {
+  background-color: var(--color-surface-card);
+}
+
+.bg-brand-surface-container {
+  background-color: var(--color-surface-container);
+}
+
+.bg-brand-surface-container-low {
+  background-color: var(--color-surface-container-low);
+}
+
+.bg-brand-primary {
+  background-color: var(--color-primary);
+}
+
+.bg-brand-primary-container {
+  background-color: var(--color-primary-container);
+}
+
+.bg-brand-secondary {
+  background-color: var(--color-secondary);
+}
+
+.bg-brand-secondary-container {
+  background-color: var(--color-secondary-container);
+}
+
+.text-brand-primary {
+  color: var(--color-primary);
+}
+
+.text-brand-on-primary {
+  color: var(--color-on-primary);
+}
+
+.text-brand-secondary {
+  color: var(--color-secondary);
+}
+
+.text-brand-on-surface {
+  color: var(--color-on-surface);
+}
+
+.text-brand-on-surface-variant {
+  color: var(--color-on-surface-variant);
+}
+
+.text-brand-muted {
+  color: var(--color-on-surface-muted);
+}
+
+.border-brand-primary {
+  border-color: var(--color-primary);
+}
+
+.border-brand-outline {
+  border-color: var(--color-outline);
+}
+
+.border-brand-outline-variant {
+  border-color: var(--color-outline-variant);
+}
+
+.border-brand-subtle {
+  border-color: var(--color-border-subtle);
+}
+
+.font-serif-brand {
+  font-family: var(--font-serif);
+}
+
+.font-sans-brand {
+  font-family: var(--font-sans);
+}
+
+.font-label-brand {
+  font-family: var(--font-label);
+}
+
+.rounded-brand-btn {
+  border-radius: var(--radius-btn);
+}
+
+.rounded-brand-card {
+  border-radius: var(--radius-card);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-surface-container);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-outline-variant);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-outline);
+}
