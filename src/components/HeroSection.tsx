@@ -6,33 +6,51 @@ import { Sparkles, ArrowRight, Flame } from 'lucide-react';
 const HERO_SLIDES = [
   {
     id: 1,
-    titleLine1: 'Hand-pounded.',
-    titleAccent: 'Sun-dried.',
-    titleLine3: "Andhra's soul.",
-    subtitle: 'Made in small batches using traditional methods and the finest ingredients.',
-    image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=1200&q=85',
-    imageAlt: 'Authentic stone grounded Andhra Podis and red chillies',
-    tag: 'Batch #48 Fresh Harvest',
+    titleLine1: 'Bitter. Bold.',
+    titleAccent: 'Naturally Good.',
+    titleLine3: 'Kakara Karam.',
+    subtitle:
+      'A traditional Andhra podi made with bitter gourd, aromatic spices, and authentic home-style flavors.',
+    image:
+      'https://cdn.jsdelivr.net/gh/trinadhreddy-b/assetsfortpf@main/kakara_karam_podi.png',
+    imageAlt: 'Kakara Karam Podi',
+    tag: 'Traditional Andhra Recipe',
   },
   {
     id: 2,
-    titleLine1: 'Pure Desi.',
-    titleAccent: 'Zero Chemical.',
-    titleLine3: 'Grandma’s Rolu.',
-    subtitle: 'Slow pounded in traditional stone mortar (Rolu-Rokali) to preserve natural aromatic essential oils.',
-    image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=1200&q=85',
-    imageAlt: 'Sun-dried curry leaves and organic moringa leaves',
-    tag: 'Rolu Stone Pounded',
+    titleLine1: 'Aromatic.',
+    titleAccent: 'Fresh & Earthy.',
+    titleLine3: 'Karivepaku Karam.',
+    subtitle:
+      'Made with fragrant curry leaves and roasted spices for a delicious burst of traditional South Indian flavor.',
+    image:
+      'https://cdn.jsdelivr.net/gh/trinadhreddy-b/assetsfortpf@main/karivepaku_podi.png',
+    imageAlt: 'Karivepaku Karam Podi',
+    tag: 'Curry Leaf Goodness',
   },
   {
     id: 3,
-    titleLine1: 'Guntur Spice.',
-    titleAccent: 'Pure Ghee Mate.',
-    titleLine3: 'Every Grain Magic.',
-    subtitle: 'Crisp hot idlis, steaming rice, and crunchy ghee roast dosas will never be the same again.',
-    image: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=1200&q=85',
-    imageAlt: 'Podi with hot rice, ghee, and traditional South Indian tiffin',
-    tag: '100% Preservative Free',
+    titleLine1: 'Green Goodness.',
+    titleAccent: 'Traditionally Made.',
+    titleLine3: 'Munaga Karam.',
+    subtitle:
+      'A flavorful podi crafted with nutrient-rich moringa leaves and carefully roasted traditional spices.',
+    image:
+      'https://cdn.jsdelivr.net/gh/trinadhreddy-b/assetsfortpf@main/munaga_karam_podi.png',
+    imageAlt: 'Munaga Karam Podi',
+    tag: 'Made with Moringa Leaves',
+  },
+  {
+    id: 4,
+    titleLine1: 'Roasted.',
+    titleAccent: 'Nutty & Delicious.',
+    titleLine3: 'Putnala Podi.',
+    subtitle:
+      'A wholesome roasted podi with a rich nutty flavor, perfect with hot rice, ghee, idli, dosa, and more.',
+    image:
+      'https://cdn.jsdelivr.net/gh/trinadhreddy-b/assetsfortpf@main/put_podi.png',
+    imageAlt: 'Putnala Podi',
+    tag: 'Roasted to Perfection',
   },
 ];
 
@@ -77,26 +95,28 @@ export const HeroSection: React.FC = () => {
             borderColor: 'var(--color-outline-variant)',
           }}
         >
+          {/* Subtle Ambient Glow behind the product image */}
+          <div className="absolute inset-0 bg-radial from-amber-500/10 via-transparent to-transparent pointer-events-none" />
+
           <AnimatePresence mode="wait">
             <motion.div
               key={slide.id}
-              initial={{ opacity: 0, scale: 1.04 }}
+              initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.98 }}
-              transition={{ duration: 0.6, ease: 'easeInOut' }}
-              className="absolute inset-0 w-full h-full"
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.5, ease: 'easeInOut' }}
+              className="absolute inset-0 w-full h-full flex items-center justify-center p-3 sm:p-5"
             >
               <img
                 src={slide.image}
                 alt={slide.imageAlt}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                className="w-full h-full object-contain drop-shadow-md group-hover:scale-102 transition-transform duration-500"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/15 pointer-events-none" />
               
               {/* Badge overlay on slide */}
-              <div className="absolute top-4 left-4">
-                <span className="px-3 py-1 text-xs font-semibold tracking-wider uppercase rounded-full bg-black/60 text-white backdrop-blur-md flex items-center gap-1.5 border border-white/20">
+              <div className="absolute top-4 left-4 z-10">
+                <span className="px-3 py-1 text-xs font-semibold tracking-wider uppercase rounded-full bg-black/60 text-white backdrop-blur-md flex items-center gap-1.5 border border-white/20 shadow-sm">
                   <Sparkles className="w-3 h-3 text-amber-300" />
                   {slide.tag}
                 </span>
@@ -105,7 +125,7 @@ export const HeroSection: React.FC = () => {
           </AnimatePresence>
 
           {/* Artistic Frame Accent */}
-          <div className="absolute bottom-4 right-4 flex items-center gap-1.5 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-[11px] font-bold tracking-widest text-brand-primary uppercase shadow-xs">
+          <div className="absolute bottom-4 right-4 z-10 flex items-center gap-1.5 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-[11px] font-bold tracking-widest text-brand-primary uppercase shadow-xs">
             <Flame className="w-3 h-3 text-red-600 animate-bounce" />
             <span>Andhra Craft</span>
           </div>
