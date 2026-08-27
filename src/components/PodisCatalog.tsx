@@ -14,6 +14,7 @@ export const PodisCatalog: React.FC = () => {
     setActiveCategory,
     searchQuery,
     setSearchQuery,
+    isLoading,
   } = useStore();
 
   const [selectedWeights, setSelectedWeights] = useState<Record<string, number>>({});
@@ -122,7 +123,21 @@ export const PodisCatalog: React.FC = () => {
         </div>
 
         {/* Product Cards Grid / Horizontal view matching screenshot */}
-        {filteredPodis.length === 0 ? (
+        {isLoading && podis.length === 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {[1, 2, 3, 4].map((n) => (
+              <div
+                key={n}
+                className="bg-brand-surface-card rounded-brand-card p-5 border border-brand-outline-variant/30 animate-pulse space-y-4"
+              >
+                <div className="w-full aspect-square bg-brand-surface-container rounded-lg" />
+                <div className="h-4 bg-brand-surface-container rounded w-3/4" />
+                <div className="h-3 bg-brand-surface-container rounded w-1/2" />
+                <div className="h-8 bg-brand-surface-container rounded" />
+              </div>
+            ))}
+          </div>
+        ) : filteredPodis.length === 0 ? (
           <div className="text-center py-12 bg-brand-surface-container/40 rounded-xl p-8 max-w-md mx-auto border border-dashed border-brand-outline-variant">
             <Sparkles className="w-8 h-8 mx-auto text-brand-primary mb-2 opacity-60" />
             <h3 className="font-serif-brand text-lg text-brand-on-surface">No Podis Found</h3>

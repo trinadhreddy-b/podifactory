@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useStore } from '../context/StoreContext';
 import { THEME_PRESETS } from '../data/themePresets';
-import { generateCssVariablesSnippet } from '../utils/themeEngine';
-import { X, Palette, Check, RotateCcw, Copy, Code } from 'lucide-react';
+import { X, Palette, Check, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 export const ThemeCustomizerDrawer: React.FC = () => {
@@ -15,16 +14,7 @@ export const ThemeCustomizerDrawer: React.FC = () => {
     setIsThemeDrawerOpen,
   } = useStore();
 
-  const [copied, setCopied] = useState(false);
-  const [showCode, setShowCode] = useState(false);
-
   if (!isThemeDrawerOpen) return null;
-
-  const copyCss = () => {
-    navigator.clipboard.writeText(generateCssVariablesSnippet(theme));
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   return (
     <AnimatePresence>
@@ -61,10 +51,10 @@ export const ThemeCustomizerDrawer: React.FC = () => {
               </div>
               <div>
                 <h3 className="font-serif-brand text-lg font-bold text-brand-on-surface">
-                  Theme & CSS Variables
+                  Personalize Theme
                 </h3>
                 <p className="text-[11px] text-brand-on-surface-variant">
-                  Centralized styling controller
+                  Choose your favorite color palette & style
                 </p>
               </div>
             </div>
@@ -83,13 +73,13 @@ export const ThemeCustomizerDrawer: React.FC = () => {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-label-brand font-bold uppercase tracking-wider text-brand-on-surface">
-                  Curated Presets:
+                  Color Palettes:
                 </span>
                 <button
                   onClick={resetThemeToDefault}
                   className="text-xs text-brand-muted hover:text-brand-primary flex items-center gap-1 cursor-pointer"
                 >
-                  <RotateCcw className="w-3 h-3" />
+                  <RotateCcw className="w-3.5 h-3.5" />
                   <span>Reset Default</span>
                 </button>
               </div>
@@ -101,7 +91,7 @@ export const ThemeCustomizerDrawer: React.FC = () => {
                     onClick={() => setTheme(preset)}
                     className={`w-full p-3 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between ${
                       theme.id === preset.id
-                        ? 'border-brand-primary bg-brand-surface-container/80 ring-2 ring-brand-primary/20'
+                        ? 'border-brand-primary bg-brand-surface-container/80 ring-2 ring-brand-primary/20 shadow-xs'
                         : 'border-brand-outline-variant/50 bg-brand-surface-card hover:bg-brand-surface-container/40'
                     }`}
                   >
@@ -109,24 +99,24 @@ export const ThemeCustomizerDrawer: React.FC = () => {
                       <span className="text-xs font-bold text-brand-on-surface block">
                         {preset.name}
                       </span>
-                      <span className="text-[11px] text-brand-muted font-mono">
-                        {preset.primary} • {preset.secondary}
-                      </span>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2.5">
                       <div className="flex items-center -space-x-1.5">
                         <span
                           className="w-5 h-5 rounded-full border border-white shadow-xs"
                           style={{ backgroundColor: preset.primary }}
+                          title="Primary color"
                         />
                         <span
                           className="w-5 h-5 rounded-full border border-white shadow-xs"
                           style={{ backgroundColor: preset.secondary }}
+                          title="Accent color"
                         />
                         <span
                           className="w-5 h-5 rounded-full border border-white shadow-xs"
                           style={{ backgroundColor: preset.surface }}
+                          title="Background tone"
                         />
                       </div>
                       {theme.id === preset.id && (
@@ -138,16 +128,16 @@ export const ThemeCustomizerDrawer: React.FC = () => {
               </div>
             </div>
 
-            {/* Individual CSS Variable Adjusters */}
+            {/* Individual Color Adjusters */}
             <div className="space-y-3 pt-2 border-t border-brand-outline-variant/30">
               <span className="text-xs font-label-brand font-bold uppercase tracking-wider text-brand-on-surface">
-                Fine-tune CSS Variables:
+                Custom Color Adjustments:
               </span>
 
               <div className="space-y-3 bg-brand-surface-container/40 p-4 rounded-xl border border-brand-outline-variant/30 text-xs">
                 {/* Primary */}
                 <div className="flex items-center justify-between">
-                  <span className="font-medium text-brand-on-surface">--color-primary</span>
+                  <span className="font-medium text-brand-on-surface">Primary Brand Color</span>
                   <div className="flex items-center gap-2">
                     <input
                       type="color"
@@ -159,14 +149,14 @@ export const ThemeCustomizerDrawer: React.FC = () => {
                       type="text"
                       value={theme.primary}
                       onChange={(e) => updateThemeVariable('primary', e.target.value)}
-                      className="w-20 p-1 text-xs font-mono border border-brand-outline-variant/60 rounded bg-brand-surface-card text-center"
+                      className="w-20 p-1 text-xs font-mono border border-brand-outline-variant/60 rounded bg-brand-surface-card text-center text-brand-on-surface"
                     />
                   </div>
                 </div>
 
                 {/* Secondary */}
                 <div className="flex items-center justify-between">
-                  <span className="font-medium text-brand-on-surface">--color-secondary</span>
+                  <span className="font-medium text-brand-on-surface">Warm Secondary Accent</span>
                   <div className="flex items-center gap-2">
                     <input
                       type="color"
@@ -178,14 +168,14 @@ export const ThemeCustomizerDrawer: React.FC = () => {
                       type="text"
                       value={theme.secondary}
                       onChange={(e) => updateThemeVariable('secondary', e.target.value)}
-                      className="w-20 p-1 text-xs font-mono border border-brand-outline-variant/60 rounded bg-brand-surface-card text-center"
+                      className="w-20 p-1 text-xs font-mono border border-brand-outline-variant/60 rounded bg-brand-surface-card text-center text-brand-on-surface"
                     />
                   </div>
                 </div>
 
                 {/* Surface */}
                 <div className="flex items-center justify-between">
-                  <span className="font-medium text-brand-on-surface">--color-surface</span>
+                  <span className="font-medium text-brand-on-surface">Page Background Tone</span>
                   <div className="flex items-center gap-2">
                     <input
                       type="color"
@@ -197,14 +187,14 @@ export const ThemeCustomizerDrawer: React.FC = () => {
                       type="text"
                       value={theme.surface}
                       onChange={(e) => updateThemeVariable('surface', e.target.value)}
-                      className="w-20 p-1 text-xs font-mono border border-brand-outline-variant/60 rounded bg-brand-surface-card text-center"
+                      className="w-20 p-1 text-xs font-mono border border-brand-outline-variant/60 rounded bg-brand-surface-card text-center text-brand-on-surface"
                     />
                   </div>
                 </div>
 
                 {/* Outline */}
                 <div className="flex items-center justify-between">
-                  <span className="font-medium text-brand-on-surface">--color-outline</span>
+                  <span className="font-medium text-brand-on-surface">Card Borders & Outlines</span>
                   <div className="flex items-center gap-2">
                     <input
                       type="color"
@@ -216,65 +206,36 @@ export const ThemeCustomizerDrawer: React.FC = () => {
                       type="text"
                       value={theme.outline}
                       onChange={(e) => updateThemeVariable('outline', e.target.value)}
-                      className="w-20 p-1 text-xs font-mono border border-brand-outline-variant/60 rounded bg-brand-surface-card text-center"
+                      className="w-20 p-1 text-xs font-mono border border-brand-outline-variant/60 rounded bg-brand-surface-card text-center text-brand-on-surface"
                     />
                   </div>
                 </div>
 
                 {/* Button Radius */}
                 <div className="flex items-center justify-between pt-1">
-                  <span className="font-medium text-brand-on-surface">--radius-btn</span>
+                  <span className="font-medium text-brand-on-surface">Button Shape</span>
                   <select
                     value={theme.btnRadius}
                     onChange={(e) => updateThemeVariable('btnRadius', e.target.value)}
-                    className="p-1.5 text-xs border border-brand-outline-variant/60 rounded bg-brand-surface-card"
+                    className="p-1.5 text-xs border border-brand-outline-variant/60 rounded bg-brand-surface-card text-brand-on-surface"
                   >
-                    <option value="0px">0px (Sharp)</option>
-                    <option value="4px">4px (Classic)</option>
-                    <option value="8px">8px (Medium)</option>
-                    <option value="9999px">9999px (Pill)</option>
+                    <option value="0px">Sharp Edges</option>
+                    <option value="4px">Classic Rounded</option>
+                    <option value="8px">Smooth Rounded</option>
+                    <option value="9999px">Full Pill Curve</option>
                   </select>
                 </div>
               </div>
-            </div>
-
-            {/* Toggle CSS Code View */}
-            <div className="space-y-2 pt-2 border-t border-brand-outline-variant/30">
-              <button
-                onClick={() => setShowCode(!showCode)}
-                className="w-full flex items-center justify-between text-xs font-semibold text-brand-on-surface-variant hover:text-brand-primary"
-              >
-                <div className="flex items-center gap-1.5">
-                  <Code className="w-3.5 h-3.5" />
-                  <span>View theme.css Output</span>
-                </div>
-                <span>{showCode ? 'Hide ▲' : 'Show ▼'}</span>
-              </button>
-
-              {showCode && (
-                <div className="space-y-2 pt-1">
-                  <pre className="p-3 bg-neutral-900 text-neutral-100 rounded-lg text-[10px] font-mono overflow-x-auto">
-                    {generateCssVariablesSnippet(theme)}
-                  </pre>
-                  <button
-                    onClick={copyCss}
-                    className="w-full py-2 text-xs font-semibold bg-brand-surface-container hover:bg-brand-surface-container-high rounded text-brand-on-surface flex items-center justify-center gap-1.5 cursor-pointer"
-                  >
-                    {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                    <span>{copied ? 'Copied to Clipboard!' : 'Copy :root CSS Snippet'}</span>
-                  </button>
-                </div>
-              )}
             </div>
 
           </div>
 
           {/* Footer */}
           <div className="p-4 border-t border-brand-outline-variant/30 bg-brand-surface-container/40 flex justify-between items-center text-xs">
-            <span className="text-brand-muted">Applies to all screens instantly</span>
+            <span className="text-brand-muted">Applies instantly</span>
             <button
               onClick={() => setIsThemeDrawerOpen(false)}
-              className="px-4 py-2 font-label-brand font-bold uppercase text-white bg-brand-primary rounded-brand-btn"
+              className="px-5 py-2 font-label-brand font-bold uppercase text-white bg-brand-primary rounded-brand-btn cursor-pointer transition active:scale-95"
               style={{ backgroundColor: 'var(--color-primary)' }}
             >
               Done

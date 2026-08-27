@@ -141,7 +141,7 @@ export const NavigationDrawer: React.FC = () => {
               >
                 <div className="flex items-center gap-3">
                   <Palette className="w-4 h-4 text-amber-700" />
-                  <span>Customize Theme (CSS)</span>
+                  <span>Personalize Colors & Theme</span>
                 </div>
                 <span className="text-[10px] font-bold px-1.5 py-0.5 bg-amber-100 text-amber-900 rounded">
                   Live

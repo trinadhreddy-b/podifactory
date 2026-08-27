@@ -107,7 +107,7 @@ export const OurStoryModal: React.FC = () => {
                 Small Batches, Maximum Freshness
               </h4>
               <p>
-                At <strong>{settings.storeName}</strong>, we refuse industrial shortcuts. We roast in limited 5-kilogram batches every single week. Whether it's our flagship <strong>Munagaku Karam</strong> (Drumstick leaves) for iron-rich vitality, our <strong>Karivepaku Karam</strong> for hair and scalp wellness, or our fiery <strong>Nalla Karam</strong> for hot ghee rice, each jar is a labor of domestic warmth and authentic nostalgia.
+                At <strong>{settings.storeName}</strong>, we refuse industrial shortcuts. We roast in limited 5-kilogram batches every single week. Whether it's our flagship <strong>Munagaku Karam</strong> (Drumstick leaves) for iron-rich vitality, our <strong>Karivepaku Karam</strong> for hair and scalp wellness, or our wholesome <strong>Putnala Podi</strong> for hot ghee rice, each jar is a labor of domestic warmth and authentic nostalgia.
               </p>
             </div>
 
@@ -115,7 +115,7 @@ export const OurStoryModal: React.FC = () => {
 
           {/* Footer */}
           <div className="p-4 sm:px-6 border-t border-brand-outline-variant/30 bg-brand-surface-card flex justify-between items-center">
-            <span className="text-xs text-brand-muted">Fresh batch #48 ready to ship</span>
+            <span className="text-xs text-brand-muted">Fresh batch ready to ship</span>
             <button
               onClick={() => {
                 setIsStoryModalOpen(false);

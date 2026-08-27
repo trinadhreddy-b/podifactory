@@ -52,8 +52,8 @@ export const WhyPodiFactory: React.FC = () => {
           }}
         >
           <img
-            src="https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=1200&q=85"
-            alt="Traditional stone mortar stone-pounding spices in Andhra Pradesh"
+            src="https://cdn.jsdelivr.net/gh/trinadhreddy-b/assetsfortpf@main/footer_image.png"
+            alt="Traditional Andhra Podi Craftsmanship"
             className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700"
             referrerPolicy="no-referrer"
           />

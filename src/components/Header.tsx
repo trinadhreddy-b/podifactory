@@ -19,21 +19,31 @@ export const Header: React.FC = () => {
   return (
     <header
       id="main-header"
-      className="sticky top-0 z-40 bg-brand-surface/95 backdrop-blur-md border-b border-brand-outline-variant/30 transition-colors"
+      className="relative bg-brand-surface border-b border-brand-outline-variant/30 transition-colors"
       style={{
         backgroundColor: 'var(--color-surface)',
         borderColor: 'var(--color-outline-variant)',
       }}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 sm:h-18 flex items-center justify-between">
         {/* Brand Title / Logo */}
         <a
           id="brand-logo-link"
           href="#home"
-          className="text-2xl sm:text-3xl font-serif-brand font-bold tracking-tight text-brand-primary hover:opacity-90 transition-opacity"
+          className="h-full text-xl sm:text-3xl font-serif-brand font-bold tracking-tight text-brand-primary hover:opacity-90 transition-opacity flex items-center gap-2.5 sm:gap-3.5"
           style={{ color: 'var(--color-primary)' }}
         >
-          {settings.storeName}
+          <img
+            id="brand-logo-img"
+            src="/logo.png"
+            alt="The Podi Factory Logo"
+            className="h-[80%] sm:h-[88%] w-auto max-h-12 sm:max-h-16 object-contain rounded-md shrink-0"
+            onError={(e) => {
+              // Gracefully hide if logo.png is not yet placed
+              (e.currentTarget as HTMLElement).style.display = 'none';
+            }}
+          />
+          <span>{settings.storeName}</span>
         </a>
 
         {/* Action Icons matching design screenshot */}

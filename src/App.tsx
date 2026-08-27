@@ -24,12 +24,12 @@ import { ThemeCustomizerDrawer } from './components/ThemeCustomizerDrawer';
 import { OurStoryModal } from './components/OurStoryModal';
 import { ContactModal } from './components/ContactModal';
 
-import { Palette, MessageSquare, ShoppingBag, ShieldCheck } from 'lucide-react';
+import { Instagram, MessageSquare, ShoppingBag, ShieldCheck } from 'lucide-react';
 
 const MainAppContent: React.FC = () => {
   const {
-    setIsThemeDrawerOpen,
     getWhatsAppOrderUrl,
+    getInstagramDmUrl,
     setIsCartDrawerOpen,
     getCartCount,
     isAdminAuthenticated,
@@ -76,15 +76,17 @@ const MainAppContent: React.FC = () => {
 
       {/* Floating Quick Action Buttons */}
       <div className="fixed bottom-5 right-5 z-30 flex flex-col items-end gap-2.5">
-        {/* Floating Theme Switcher */}
-        <button
-          id="floating-theme-trigger-btn"
-          onClick={() => setIsThemeDrawerOpen(true)}
-          className="p-3 rounded-full bg-brand-surface-card text-brand-on-surface hover:text-brand-primary border border-brand-outline-variant/60 shadow-lg hover:shadow-xl active:scale-95 transition-all cursor-pointer flex items-center justify-center group"
-          title="Change Theme (CSS Variables)"
+        {/* Floating Instagram Direct Link */}
+        <a
+          id="floating-instagram-btn"
+          href={getInstagramDmUrl()}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="p-3.5 rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white shadow-lg hover:shadow-xl active:scale-95 transition-all cursor-pointer flex items-center justify-center group"
+          title="Follow us on Instagram (@thepodifactory)"
         >
-          <Palette className="w-5 h-5 group-hover:rotate-45 transition-transform duration-300" />
-        </button>
+          <Instagram className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+        </a>
 
         {/* Floating WhatsApp Direct Order */}
         <a

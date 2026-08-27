@@ -67,7 +67,7 @@ export const THEME_PRESETS: ThemeConfig[] = [
   },
   {
     id: 'heritage-noir',
-    name: 'Nalla Karam Deep Reserve',
+    name: 'Putnala Podi Nutty Warmth',
     primary: '#42160d',
     primaryHover: '#2b0b04',
     primaryContainer: '#592215',

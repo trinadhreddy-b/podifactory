@@ -2,6 +2,7 @@ export interface PodiWeightOption {
   label: string;
   grams: number;
   price: number;
+  originalPrice?: number;
 }
 
 export interface PodiItem {

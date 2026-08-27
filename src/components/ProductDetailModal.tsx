@@ -67,15 +67,15 @@ export const ProductDetailModal: React.FC = () => {
           {/* Header Bar */}
           <div className="flex items-center justify-between p-4 sm:px-6 border-b border-brand-outline-variant/30 sticky top-0 bg-brand-surface-card/95 backdrop-blur-md z-20">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-label-brand font-bold uppercase tracking-widest text-brand-primary">
-                Artisanal Blend
+              <span
+                className="px-2.5 py-1 text-xs font-label-brand font-bold uppercase tracking-wider text-white rounded shadow-2xs"
+                style={{ backgroundColor: 'var(--color-primary)' }}
+              >
+                {selectedPodi.badge || 'Artisanal Blend'}
               </span>
-              {selectedPodi.badge && (
-                <span
-                  className="px-2 py-0.5 text-[10px] font-bold text-white rounded"
-                  style={{ backgroundColor: 'var(--color-primary-container)' }}
-                >
-                  {selectedPodi.badge}
+              {selectedPodi.isFeatured && (
+                <span className="px-2 py-0.5 text-[10px] font-bold text-amber-900 bg-amber-100 rounded border border-amber-300">
+                  ★ Featured
                 </span>
               )}
             </div>
@@ -91,7 +91,7 @@ export const ProductDetailModal: React.FC = () => {
                   title="Edit in Admin Dashboard"
                 >
                   <Edit3 className="w-4 h-4" />
-                  <span className="hidden sm:inline">Edit</span>
+                  <span className="hidden sm:inline">Edit in Admin</span>
                 </button>
               )}
 
@@ -123,7 +123,7 @@ export const ProductDetailModal: React.FC = () => {
                 <div className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-md px-3 py-1 rounded-full text-white text-xs font-medium flex items-center gap-1.5 border border-white/20">
                   <Flame className={`w-3.5 h-3.5 ${selectedPodi.spiciness === 3 ? 'text-red-400' : selectedPodi.spiciness === 2 ? 'text-amber-400' : 'text-emerald-400'}`} />
                   <span>
-                    Heat Level: {selectedPodi.spiciness === 3 ? '🔥🔥🔥 Andhra Fiery' : selectedPodi.spiciness === 2 ? '🔥🔥 Medium Pungent' : '🔥 Mild & Earthy'}
+                    Heat: {selectedPodi.spiciness === 3 ? '🔥🔥🔥 Andhra Fiery' : selectedPodi.spiciness === 2 ? '🔥🔥 Medium Pungent' : '🔥 Mild & Earthy'}
                   </span>
                 </div>
               </div>
@@ -148,129 +148,149 @@ export const ProductDetailModal: React.FC = () => {
                   <span className="text-3xl font-serif-brand font-bold text-brand-primary">
                     ₹{totalPrice}
                   </span>
-                  {selectedPodi.originalPrice && (
+                  {(currentWeight.originalPrice && currentWeight.originalPrice > currentWeight.price) ? (
+                    <span className="text-sm line-through text-brand-muted">
+                      ₹{currentWeight.originalPrice * qty}
+                    </span>
+                  ) : (selectedPodi.originalPrice && selectedPodi.originalPrice > selectedPodi.price) ? (
                     <span className="text-sm line-through text-brand-muted">
                       ₹{Math.round(selectedPodi.originalPrice * (currentWeight.grams / (selectedPodi.weights[1]?.grams || 200))) * qty}
                     </span>
-                  )}
+                  ) : null}
                   <span className="text-xs text-brand-muted uppercase font-label-brand">
                     ({currentWeight.label} × {qty})
                   </span>
                 </div>
 
-                {/* Pack Size Selector */}
-                <div className="space-y-2 pt-2">
-                  <label className="text-xs font-label-brand font-bold uppercase tracking-wider text-brand-on-surface">
-                    Select Pack Size:
-                  </label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {selectedPodi.weights.map((w, idx) => (
+                  {/* Pack Size Selector */}
+                  <div className="space-y-2 pt-2">
+                    <label className="text-xs font-label-brand font-bold uppercase tracking-wider text-brand-on-surface">
+                      Select Pack Size:
+                    </label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {selectedPodi.weights.map((w, idx) => (
+                        <button
+                          key={w.grams || idx}
+                          type="button"
+                          onClick={() => setSelectedWeightIdx(idx)}
+                          className={`p-2 rounded-lg text-center border transition-all cursor-pointer ${
+                            selectedWeightIdx === idx
+                              ? 'border-brand-primary bg-brand-surface-container font-bold text-brand-primary shadow-2xs'
+                              : 'border-brand-outline-variant/60 bg-brand-surface-card hover:bg-brand-surface-container text-brand-on-surface-variant'
+                          }`}
+                        >
+                          <div className="text-xs">{w.label}</div>
+                          <div className="text-xs font-serif-brand font-bold text-brand-on-surface mt-0.5 flex items-center justify-center gap-1.5">
+                            <span>₹{w.price}</span>
+                            {w.originalPrice && w.originalPrice > w.price && (
+                              <span className="text-[10px] line-through font-normal text-brand-muted">
+                                ₹{w.originalPrice}
+                              </span>
+                            )}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Quantity Selector */}
+                  <div className="flex items-center gap-3 pt-2">
+                    <span className="text-xs font-label-brand font-bold uppercase text-brand-on-surface">
+                      Quantity:
+                    </span>
+                    <div className="flex items-center border border-brand-outline-variant rounded-md overflow-hidden bg-brand-surface-card">
                       <button
-                        key={w.grams}
-                        type="button"
-                        onClick={() => setSelectedWeightIdx(idx)}
-                        className={`p-2 rounded-lg text-center border transition-all cursor-pointer ${
-                          selectedWeightIdx === idx
-                            ? 'border-brand-primary bg-brand-surface-container font-bold text-brand-primary shadow-2xs'
-                            : 'border-brand-outline-variant/60 bg-brand-surface-card hover:bg-brand-surface-container text-brand-on-surface-variant'
-                        }`}
+                        onClick={() => setQty((q) => Math.max(1, q - 1))}
+                        className="px-3 py-1 text-sm font-bold hover:bg-brand-surface-container text-brand-on-surface cursor-pointer"
                       >
-                        <div className="text-xs">{w.label}</div>
-                        <div className="text-xs font-serif-brand font-bold text-brand-on-surface mt-0.5">
-                          ₹{w.price}
-                        </div>
+                        -
                       </button>
+                      <span className="px-4 py-1 text-sm font-bold text-brand-on-surface min-w-[32px] text-center">
+                        {qty}
+                      </span>
+                      <button
+                        onClick={() => setQty((q) => q + 1)}
+                        className="px-3 py-1 text-sm font-bold hover:bg-brand-surface-container text-brand-on-surface cursor-pointer"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Description */}
+              {selectedPodi.description && (
+                <div className="space-y-2 pt-2 border-t border-brand-outline-variant/30">
+                  <h4 className="text-xs font-label-brand font-bold uppercase tracking-wider text-brand-on-surface">
+                    About this Podi
+                  </h4>
+                  <p className="text-sm text-brand-on-surface-variant leading-relaxed">
+                    {selectedPodi.description}
+                  </p>
+                </div>
+              )}
+
+              {/* Ingredients & Health Benefits */}
+              {((selectedPodi.ingredients && selectedPodi.ingredients.length > 0) ||
+                (selectedPodi.healthBenefits && selectedPodi.healthBenefits.length > 0)) && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                  {/* Ingredients */}
+                  {selectedPodi.ingredients && selectedPodi.ingredients.length > 0 && (
+                    <div className="p-3.5 bg-brand-surface-container/60 rounded-xl border border-brand-outline-variant/30 space-y-2">
+                      <div className="flex items-center gap-1.5 text-xs font-bold font-label-brand uppercase text-brand-primary">
+                        <Sparkles className="w-3.5 h-3.5" />
+                        <span>Pure Ingredients</span>
+                      </div>
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {selectedPodi.ingredients.map((ing, idx) => (
+                          <span
+                            key={idx}
+                            className="text-xs bg-brand-surface-card px-2 py-0.5 rounded border border-brand-outline-variant/40 text-brand-on-surface font-medium"
+                          >
+                            {ing}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Health Benefits */}
+                  {selectedPodi.healthBenefits && selectedPodi.healthBenefits.length > 0 && (
+                    <div className="p-3.5 bg-brand-surface-container/60 rounded-xl border border-brand-outline-variant/30 space-y-2">
+                      <div className="flex items-center gap-1.5 text-xs font-bold font-label-brand uppercase text-emerald-800">
+                        <HeartPulse className="w-3.5 h-3.5" />
+                        <span>Health Benefits</span>
+                      </div>
+                      <ul className="text-xs text-brand-on-surface-variant space-y-1 pt-1">
+                        {selectedPodi.healthBenefits.map((ben, idx) => (
+                          <li key={idx} className="flex items-start gap-1.5">
+                            <span className="text-emerald-700 font-bold">•</span>
+                            <span>{ben}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Serving Suggestions */}
+              {selectedPodi.servingSuggestions && selectedPodi.servingSuggestions.length > 0 && (
+                <div className="p-3.5 bg-amber-50/50 rounded-xl border border-amber-200/50 space-y-2">
+                  <div className="flex items-center gap-1.5 text-xs font-bold font-label-brand uppercase text-amber-900">
+                    <UtensilsCrossed className="w-3.5 h-3.5" />
+                    <span>How to Enjoy (Traditional Pairings)</span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-xs text-amber-950 font-medium">
+                    {selectedPodi.servingSuggestions.map((sug, idx) => (
+                      <div key={idx} className="bg-white/80 p-2 rounded border border-amber-200/40">
+                        {sug}
+                      </div>
                     ))}
                   </div>
                 </div>
-
-                {/* Quantity Selector */}
-                <div className="flex items-center gap-3 pt-2">
-                  <span className="text-xs font-label-brand font-bold uppercase text-brand-on-surface">
-                    Quantity:
-                  </span>
-                  <div className="flex items-center border border-brand-outline-variant rounded-md overflow-hidden bg-brand-surface-card">
-                    <button
-                      onClick={() => setQty((q) => Math.max(1, q - 1))}
-                      className="px-3 py-1 text-sm font-bold hover:bg-brand-surface-container text-brand-on-surface cursor-pointer"
-                    >
-                      -
-                    </button>
-                    <span className="px-4 py-1 text-sm font-bold text-brand-on-surface min-w-[32px] text-center">
-                      {qty}
-                    </span>
-                    <button
-                      onClick={() => setQty((q) => q + 1)}
-                      className="px-3 py-1 text-sm font-bold hover:bg-brand-surface-container text-brand-on-surface cursor-pointer"
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Description */}
-            <div className="space-y-2 pt-2 border-t border-brand-outline-variant/30">
-              <h4 className="text-xs font-label-brand font-bold uppercase tracking-wider text-brand-on-surface">
-                About this Podi
-              </h4>
-              <p className="text-sm text-brand-on-surface-variant leading-relaxed">
-                {selectedPodi.description}
-              </p>
-            </div>
-
-            {/* Ingredients & Health Benefits */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-              {/* Ingredients */}
-              <div className="p-3.5 bg-brand-surface-container/60 rounded-xl border border-brand-outline-variant/30 space-y-2">
-                <div className="flex items-center gap-1.5 text-xs font-bold font-label-brand uppercase text-brand-primary">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Pure Ingredients</span>
-                </div>
-                <div className="flex flex-wrap gap-1.5 pt-1">
-                  {selectedPodi.ingredients.map((ing, idx) => (
-                    <span
-                      key={idx}
-                      className="text-xs bg-brand-surface-card px-2 py-0.5 rounded border border-brand-outline-variant/40 text-brand-on-surface"
-                    >
-                      {ing}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Health Benefits */}
-              <div className="p-3.5 bg-brand-surface-container/60 rounded-xl border border-brand-outline-variant/30 space-y-2">
-                <div className="flex items-center gap-1.5 text-xs font-bold font-label-brand uppercase text-emerald-800">
-                  <HeartPulse className="w-3.5 h-3.5" />
-                  <span>Health Benefits</span>
-                </div>
-                <ul className="text-xs text-brand-on-surface-variant space-y-1 pt-1">
-                  {selectedPodi.healthBenefits.map((ben, idx) => (
-                    <li key={idx} className="flex items-start gap-1.5">
-                      <span className="text-emerald-700 font-bold">•</span>
-                      <span>{ben}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* Serving Suggestions */}
-            <div className="p-3.5 bg-amber-50/50 rounded-xl border border-amber-200/50 space-y-2">
-              <div className="flex items-center gap-1.5 text-xs font-bold font-label-brand uppercase text-amber-900">
-                <UtensilsCrossed className="w-3.5 h-3.5" />
-                <span>How to Enjoy (Traditional Pairings)</span>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-xs text-amber-950 font-medium">
-                {selectedPodi.servingSuggestions.map((sug, idx) => (
-                  <div key={idx} className="bg-white/80 p-2 rounded border border-amber-200/40">
-                    {sug}
-                  </div>
-                ))}
-              </div>
-            </div>
+              )}
 
           </div>
 
